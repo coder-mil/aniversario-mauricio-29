@@ -71,7 +71,6 @@ form.addEventListener('submit', async (event) => {
   const name = String(data.get('name') || '').trim();
   const phone = String(data.get('phone') || '').trim();
   const answer = String(data.get('answer') || '');
-  const song = String(data.get('song') || '').trim();
   const honey = String(data.get('_honey') || '').trim();
 
   // --- honeypot: bot detectado — finge sucesso e sai ---
@@ -89,9 +88,8 @@ form.addEventListener('submit', async (event) => {
   const answerText = ANSWER_TEXT[answer] || answer;
   const message = [
     'Convite M29 · 15.08.2026 · Casa 264',
-    `Presença: ${answerText}`,
-    song ? `Sugestão de música: ${song}` : ''
-  ].filter(Boolean).join('\n');
+    `Presença: ${answerText}`
+  ].join('\n');
 
   const payload = {
     name,

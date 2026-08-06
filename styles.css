@@ -203,13 +203,6 @@ h1 em, h2 em { font-style: normal; color: var(--coral); }
 .form-success p { color: rgba(242,234,220,.78); line-height: 1.5; }
 .form-success .text-link { color: var(--paper); }
 
-.playlist { padding-bottom: 120px; }
-.playlist-card { background: var(--lilac); border: 1px solid var(--ink); padding: 30px 35px; display: grid; grid-template-columns: 70px 1fr auto; gap: 28px; align-items: center; }
-.vinyl { width: 58px; height: 58px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-size: 2.3rem; box-shadow: inset 0 0 0 10px rgba(23,19,20,.06); }
-.playlist-card h2 { font: 600 clamp(1.7rem, 3vw, 2.8rem)/.95 var(--display); letter-spacing: -.07em; margin: 0 0 10px; }
-.playlist-card p:not(.card-kicker) { margin: 0; max-width: 500px; line-height: 1.45; }
-.playlist-card .button { white-space: nowrap; }
-
 .site-footer { border-top: 1px solid var(--line); padding: 27px 0 45px; display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 20px; align-items: start; }
 .site-footer p { font: .65rem/1.45 var(--mono); color: rgba(23,19,20,.6); margin: 0; }
 .footer-date { text-align: right; }
@@ -230,8 +223,6 @@ h1 em, h2 em { font-style: normal; color: var(--coral); }
   .countdown-section { padding-bottom: 95px; gap: 45px; }
   .rsvp-card { padding: 31px 24px; gap: 45px; }
   .rsvp-card::before { font-size: 190px; right: -30px; top: -58px; }
-  .playlist-card { grid-template-columns: 1fr; gap: 18px; padding: 26px; }
-  .playlist-card .button { justify-self: start; }
   .site-footer { grid-template-columns: 1fr 1fr; }
   .site-footer p:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
   .footer-date { text-align: right; }
