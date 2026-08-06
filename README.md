@@ -32,7 +32,7 @@ O formulário de RSVP envia os dados para `https://inbox.mauriciomilano.com/api/
 via `fetch` (POST, JSON, header `X-Site-Token`). Campos enviados:
 
 - `name` (obrigatório, do input `name`)
-- `email` (obrigatório, regex client-side)
+- `email` (fixo: `aniversariodo@mauriciomilano.com` — não é pedido ao visitante)
 - `phone` (opcional)
 - `subject` (fixo: `RSVP · aniversário M29 · 15.08.2026`)
 - `message` (composto a partir de `answer` + `song`)

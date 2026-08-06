@@ -32,8 +32,8 @@ const errorBox = $('form-error');
 const INBOX_ENDPOINT = 'https://inbox.mauriciomilano.com/api/v1/submit';
 const INBOX_TOKEN = 'mb_16e924eae3514664bd31892df41ec2b58ad3a7a0baf8bf78';
 
-// regex de email pragmática (mesma do HTML5 do navegador, basicamente)
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// email fixo do site — todas as confirmações caem na inbox do Mauricio
+const SITE_EMAIL = 'aniversariodo@mauriciomilano.com';
 
 const ANSWER_TEXT = {
   sim: 'Sim, estarei performando!',
@@ -69,7 +69,6 @@ form.addEventListener('submit', async (event) => {
 
   const data = new FormData(form);
   const name = String(data.get('name') || '').trim();
-  const email = String(data.get('email') || '').trim();
   const phone = String(data.get('phone') || '').trim();
   const answer = String(data.get('answer') || '');
   const song = String(data.get('song') || '').trim();
@@ -84,7 +83,6 @@ form.addEventListener('submit', async (event) => {
 
   // --- validação client-side ---
   if (!name) return showError('Falta teu nome.');
-  if (!email || !EMAIL_RE.test(email)) return showError('Email inválido.');
   if (!answer) return showError('Escolhe uma opção de presença.');
 
   // --- monta o payload pro inbox ---
@@ -97,7 +95,7 @@ form.addEventListener('submit', async (event) => {
 
   const payload = {
     name,
-    email,
+    email: SITE_EMAIL,
     phone,
     subject: 'RSVP · aniversário M29 · 15.08.2026',
     message
