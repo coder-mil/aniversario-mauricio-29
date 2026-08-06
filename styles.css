@@ -123,7 +123,7 @@ h1 em, h2 em { font-style: normal; color: var(--coral); }
 .stamp-tail { position: absolute; bottom: 3%; right: -8%; background: var(--acid); border: 1px solid var(--ink); padding: 9px 12px; font: 500 .62rem/1.35 var(--mono); text-transform: uppercase; transform: rotate(-9deg); }
 
 .ticker { background: var(--ink); color: var(--acid); overflow: hidden; border-block: 1px solid var(--ink); }
-.ticker-track { width: max-content; display: flex; align-items: center; gap: 24px; padding: 14px 0; animation: ticker 28s linear infinite; font: 500 .7rem var(--mono); letter-spacing: .09em; }
+.ticker-track { width: max-content; min-width: 200%; display: flex; align-items: center; gap: 24px; padding: 14px 0; animation: ticker 22s linear infinite; font: 500 .7rem var(--mono); letter-spacing: .09em; will-change: transform; }
 .ticker b { color: var(--coral); font-size: 1.1rem; }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
