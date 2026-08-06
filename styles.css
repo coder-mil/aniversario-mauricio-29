@@ -175,8 +175,6 @@ h1 em, h2 em { font-style: normal; color: var(--coral); }
 .rsvp-form label span { color: var(--coral); }
 .rsvp-form label small { color: rgba(242,234,220,.48); text-transform: none; letter-spacing: 0; }
 .rsvp-form input, .rsvp-form select, .rsvp-form textarea { color: var(--paper); background: transparent; border: 0; border-bottom: 1px solid rgba(242,234,220,.45); border-radius: 0; padding: 12px 0; margin-bottom: 25px; min-height: 44px; }
-.rsvp-form textarea { padding: 12px 0 14px; line-height: 1.5; resize: none; min-height: 92px; }
-.rsvp-form textarea:hover { border-bottom-color: rgba(242,234,220,.7); }
 .rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: rgba(242,234,220,.38); }
 .rsvp-form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--acid) 50%), linear-gradient(135deg, var(--acid) 50%, transparent 50%); background-position: calc(100% - 8px) 50%, calc(100% - 3px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
 .rsvp-form option { color: var(--ink); }
