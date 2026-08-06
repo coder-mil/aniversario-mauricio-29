@@ -179,6 +179,22 @@ h1 em, h2 em { font-style: normal; color: var(--coral); }
 .rsvp-form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--acid) 50%), linear-gradient(135deg, var(--acid) 50%, transparent 50%); background-position: calc(100% - 8px) 50%, calc(100% - 3px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
 .rsvp-form option { color: var(--ink); }
 .rsvp-form .button-primary { color: var(--ink); border-color: var(--acid); margin-top: 10px; }
+.button[disabled],
+.button[aria-busy="true"] {
+  opacity: .55;
+  cursor: progress;
+  transform: none;
+  box-shadow: none;
+}
+.form-error {
+  color: #ff7e6b;
+  font: 500 .8rem/1.4 var(--mono);
+  letter-spacing: .02em;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 2px solid var(--coral);
+  background: rgba(255, 126, 107, .08);
+}
 .button-full { width: 100%; }
 .form-note { color: rgba(242,234,220,.46); font: .62rem/1.4 var(--mono); margin: 14px 0 0; }
 .form-success { align-self: center; max-width: 400px; }

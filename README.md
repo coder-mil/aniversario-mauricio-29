@@ -21,10 +21,23 @@ Abra <http://localhost:4173> no navegador.
 
 Antes de compartilhar o link final:
 
-1. Substituir o `wa.me/?text=...` em `script.js` pelo número do Mauricio, caso o RSVP seja via WhatsApp.
+1. (resolvido) RSVP é integrado com `inbox.mauriciomilano.com/api/v1/submit` — o token de site está versionado no `script.js`.
 2. Se quiser, incluir uma foto do aniversariante ou da Casa 264.
 3. Definir se haverá informações de entrada, consumação, acompanhantes e encerramento.
 4. Trocar o link de sugestão de música por uma playlist colaborativa real do Spotify.
+
+## Integração com o Milano Inbox
+
+O formulário de RSVP envia os dados para `https://inbox.mauriciomilano.com/api/v1/submit`
+via `fetch` (POST, JSON, header `X-Site-Token`). Campos enviados:
+
+- `name` (obrigatório, do input `name`)
+- `email` (obrigatório, regex client-side)
+- `phone` (opcional)
+- `subject` (fixo: `RSVP · aniversário M29 · 15.08.2026`)
+- `message` (composto a partir de `answer` + `song`)
+
+Anti-spam: campo `_honey` hidden; se vier preenchido, finge sucesso e não envia.
 
 ## Arquivos
 

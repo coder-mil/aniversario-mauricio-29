@@ -25,36 +25,123 @@ setInterval(updateCountdown, 1000);
 const form = $('rsvp-form');
 const success = $('form-success');
 const editButton = $('edit-rsvp');
+const submitButton = $('rsvp-submit');
+const errorBox = $('form-error');
 
-form.addEventListener('submit', (event) => {
+// --- config do inbox ---
+const INBOX_ENDPOINT = 'https://inbox.mauriciomilano.com/api/v1/submit';
+const INBOX_TOKEN = 'mb_16e924eae3514664bd31892df41ec2b58ad3a7a0baf8bf78';
+
+// regex de email pragmática (mesma do HTML5 do navegador, basicamente)
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const ANSWER_TEXT = {
+  sim: 'Sim, estarei performando!',
+  talvez: 'Talvez — estou negociando com o universo.',
+  nao: 'Não consigo ir, mas mando amor.'
+};
+
+function showError(msg) {
+  errorBox.textContent = msg;
+  errorBox.hidden = false;
+}
+function clearError() {
+  errorBox.textContent = '';
+  errorBox.hidden = true;
+}
+
+function setLoading(isLoading) {
+  submitButton.disabled = isLoading;
+  submitButton.dataset.loading = isLoading ? '1' : '0';
+  submitButton.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+  // mantém o <span> ↗ intacto; só troca o texto antes dele
+  const labelNode = [...submitButton.childNodes].find(
+    (n) => n.nodeType === Node.TEXT_NODE
+  );
+  if (labelNode) {
+    labelNode.textContent = isLoading ? 'enviando… ' : 'confirmar presença ';
+  }
+}
+
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
+  clearError();
+
   const data = new FormData(form);
   const name = String(data.get('name') || '').trim();
+  const email = String(data.get('email') || '').trim();
+  const phone = String(data.get('phone') || '').trim();
   const answer = String(data.get('answer') || '');
   const song = String(data.get('song') || '').trim();
+  const honey = String(data.get('_honey') || '').trim();
 
-  const answerText = {
-    sim: 'Sim, estarei performando!',
-    talvez: 'Talvez — estou negociando com o universo.',
-    nao: 'Não consigo ir, mas mando amor.'
-  }[answer] || 'Ainda não sei.';
+  // --- honeypot: bot detectado — finge sucesso e sai ---
+  if (honey) {
+    form.hidden = true;
+    success.hidden = false;
+    return;
+  }
 
+  // --- validação client-side ---
+  if (!name) return showError('Falta teu nome.');
+  if (!email || !EMAIL_RE.test(email)) return showError('Email inválido.');
+  if (!answer) return showError('Escolhe uma opção de presença.');
+
+  // --- monta o payload pro inbox ---
+  const answerText = ANSWER_TEXT[answer] || answer;
   const message = [
-    'Oi, Mauricio! Vim pelo convite do M29 🎉',
-    `Meu nome é ${name}.`,
-    answerText,
-    song ? `Minha sugestão de música: ${song}` : ''
+    'Convite M29 · 15.08.2026 · Casa 264',
+    `Presença: ${answerText}`,
+    song ? `Sugestão de música: ${song}` : ''
   ].filter(Boolean).join('\n');
 
-  // Replace with Mauricio's number when the RSVP channel is defined.
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank', 'noopener');
-  form.hidden = true;
-  success.hidden = false;
+  const payload = {
+    name,
+    email,
+    phone,
+    subject: 'RSVP · aniversário M29 · 15.08.2026',
+    message
+  };
+
+  setLoading(true);
+  try {
+    const res = await fetch(INBOX_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Site-Token': INBOX_TOKEN
+      },
+      body: JSON.stringify(payload)
+    });
+
+    let body = null;
+    try { body = await res.json(); } catch { /* resposta sem JSON */ }
+
+    if (!res.ok || !body || !body.ok) {
+      const reason = (body && (body.error || body.message)) || `HTTP ${res.status}`;
+      throw new Error(reason);
+    }
+
+    // --- sucesso ---
+    form.hidden = true;
+    success.hidden = false;
+    // (opcional) expor o id pra debug em window
+    if (body.id) form.dataset.lastInboxId = body.id;
+  } catch (err) {
+    // mensagem amigável; loga o detalhe técnico no console
+    console.error('[rsvp] envio falhou:', err);
+    showError(
+      'Não rolou enviar agora. Tenta de novo em alguns segundos — ' +
+      'se persistir, me chama no WhatsApp.'
+    );
+  } finally {
+    setLoading(false);
+  }
 });
 
 editButton.addEventListener('click', () => {
   success.hidden = true;
   form.hidden = false;
+  clearError();
   $('name').focus();
 });

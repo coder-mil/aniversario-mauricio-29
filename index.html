@@ -110,9 +110,19 @@
           <h2>vem ou<br><em>não vem?</em></h2>
           <p>Me ajuda a organizar a revolução logística: confirma tua presença e, se quiser, já deixa uma música para a pista.</p>
         </div>
-        <form id="rsvp-form" class="rsvp-form">
+        <form id="rsvp-form" class="rsvp-form" novalidate>
+          <!-- honeypot anti-spam: bots preenchem, humanos não veem -->
+          <input type="text" name="_honey" id="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
           <label for="name">teu nome <span>*</span></label>
           <input id="name" name="name" type="text" autocomplete="name" placeholder="ex.: bell hooks" required>
+
+          <label for="email">teu email <span>*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="ex.: bell@hooks.love" inputmode="email" required>
+
+          <label for="phone">whatsapp <small>(opcional)</small></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(21) 99999-9999" inputmode="tel">
+
           <label for="answer">situação <span>*</span></label>
           <select id="answer" name="answer" required>
             <option value="" selected disabled>escolhe uma opção</option>
@@ -120,10 +130,15 @@
             <option value="talvez">talvez — em negociação com o universo</option>
             <option value="nao">não consigo, mas mando amor</option>
           </select>
+
           <label for="song">uma música para a noite <small>(opcional)</small></label>
           <input id="song" name="song" type="text" placeholder="artista — faixa">
-          <button class="button button-primary button-full" type="submit">confirmar pelo WhatsApp <span aria-hidden="true">↗</span></button>
-          <p class="form-note">O botão abre uma mensagem pronta no WhatsApp do Mauricio.</p>
+
+          <button class="button button-primary button-full" id="rsvp-submit" type="submit">confirmar presença <span aria-hidden="true">↗</span></button>
+          <p class="form-note">Sua confirmação cai direto no inbox do Mauricio. Sem spam, sem vazamento.</p>
+
+          <!-- feedback inline (loading / erro) — sucesso é painel separado -->
+          <p class="form-error" id="form-error" role="alert" hidden></p>
         </form>
         <div class="form-success" id="form-success" hidden>
           <span class="success-mark">✳</span>
