@@ -33,9 +33,10 @@ via `fetch` (POST, JSON, header `X-Site-Token`). Campos enviados:
 
 - `name` (obrigatório, do input `name`)
 - `email` (fixo: `aniversariodo@mauriciomilano.com` — não é pedido ao visitante)
-- `phone` (opcional)
+- `phone` (vazio — campo legado do schema, não é mais pedido)
+- `note` (opcional, textarea de mensagem livre) — incluído no `message` como bloco "Recado:"
 - `subject` (fixo: `RSVP · aniversário M29 · 15.08.2026`)
-- `message` (composto a partir de `answer`)
+- `message` (composto a partir de `answer` + `note`)
 
 Anti-spam: campo `_honey` hidden; se vier preenchido, finge sucesso e não envia.
 

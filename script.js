@@ -69,7 +69,7 @@ form.addEventListener('submit', async (event) => {
 
   const data = new FormData(form);
   const name = String(data.get('name') || '').trim();
-  const phone = String(data.get('phone') || '').trim();
+  const note = String(data.get('note') || '').trim();
   const answer = String(data.get('answer') || '');
   const honey = String(data.get('_honey') || '').trim();
 
@@ -88,13 +88,14 @@ form.addEventListener('submit', async (event) => {
   const answerText = ANSWER_TEXT[answer] || answer;
   const message = [
     'Convite M29 · 15.08.2026 · Casa 264',
-    `Presença: ${answerText}`
-  ].join('\n');
+    `Presença: ${answerText}`,
+    note ? `\nRecado:\n${note}` : ''
+  ].filter(Boolean).join('\n');
 
   const payload = {
     name,
     email: SITE_EMAIL,
-    phone,
+    phone: '',
     subject: 'RSVP · aniversário M29 · 15.08.2026',
     message
   };
